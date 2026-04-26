@@ -1,105 +1,121 @@
-# NULLTRACE 🧭
+NULLTRACE 🧭
 
 NullTrace is a lightweight OSINT (Open Source Intelligence) tool built in Python for passive digital footprint discovery and identity correlation.
 
-It is designed to help analyze usernames, domains, emails, and online presence across publicly available sources without performing intrusive or active scanning.
+It helps analyze usernames, emails, domains, and online presence using publicly available sources without performing intrusive or active scanning.
 
-The goal is to understand how OSINT frameworks work internally by building a modular, extensible reconnaissance pipeline.
+The goal of this project is to better understand how OSINT frameworks work internally by building a modular and extensible reconnaissance pipeline.
 
-## Features
+Features
+Username Intelligence
 
-### Username Intelligence
-Searches for a username across multiple public platforms to identify possible associated accounts and digital footprints.
-- GitHub
-- Reddit
-- X (Twitter)
-- Instagram (basic check)
-- TikTok (basic check)
-- Custom source modules
+Searches for usernames across multiple public platforms to identify possible digital footprints.
 
-### Email OSINT
-Performs passive email analysis:
-- domain extraction
-- breach correlation (optional API integration)
-- format validation
-- metadata enrichment
+Supported platforms include:
 
-### Domain Intelligence
-Collects publicly available domain information:
-- DNS records (A, MX, TXT, NS)
-- WHOIS lookup
-- subdomain discovery (passive sources)
-- technology hints (basic fingerprinting)
+GitHub
+Reddit
+X
+Instagram (basic checks)
+TikTok (basic checks)
+Custom source modules
+Email Intelligence
 
-### Data Correlation Engine
-Correlates collected data points to build a unified identity graph:
-- username ↔ email matches
-- domain ↔ organization mapping
-- repeated identifiers across platforms
+Performs passive email analysis through:
 
-### Export System
-Results can be exported in structured formats:
-- JSON (default)
-- CSV
-- optional report mode (human-readable summary)
+domain extraction
+email format validation
+breach correlation (optional API integration)
+metadata enrichment
+Domain Intelligence
 
-### Modular Sources System
-Each OSINT source is implemented as a separate module, allowing easy extension:
-- `sources/github.py`
-- `sources/reddit.py`
-- `sources/dns.py`
-- `sources/whois.py`
+Collects publicly available domain information such as:
 
-## Installation
+DNS records (A, MX, TXT, NS)
+WHOIS records
+passive subdomain discovery
+basic technology fingerprinting
+Data Correlation Engine
 
-Standard (Python 3.8+)
-```bash
+Correlates collected data points to identify potential relationships between:
+
+usernames ↔ emails
+domains ↔ organizations
+repeated identifiers across platforms
+Export System
+
+Exports results in structured formats:
+
+JSON (default)
+CSV
+human-readable report mode
+Modular Source Architecture
+
+Each OSINT source is implemented as an independent module for easy expansion.
+
+Examples:
+
+sources/github.py
+sources/reddit.py
+sources/dns.py
+sources/whois.py
+sources/email_lookup.py
+Project Structure
+nulltrace/
+├── cli.py
+├── nulltrace.py
+├── README.md
+│
+├── core/
+│   ├── engine.py
+│   ├── correlator.py
+│   └── resolver.py
+│
+├── sources/
+│   ├── github.py
+│   ├── reddit.py
+│   ├── dns.py
+│   ├── whois.py
+│   └── email_lookup.py
+│
+├── output/
+│   ├── json_writer.py
+│   └── csv_writer.py
+│
+└── utils/
+    └── validators.py
+Installation
+Requirements
+Python 3.8+
+
+Clone the repository:
+
 git clone https://github.com/yourusername/nulltrace.git
 cd nulltrace
 
-# Install dependencies
+Install dependencies:
+
 pip install -r requirements.txt
-```
 
 Check Python version:
-```bash
+
 python --version
-```
 
-Run help:
-```bash
+Display help menu:
+
 python nulltrace.py -h
-```
-
-## Usage
-
-**Username search**
-```bash
+Usage
+Username Search
 python nulltrace.py username johndoe
-```
-
-**Email analysis**
-```bash
+Email Analysis
 python nulltrace.py email test@example.com
-```
-
-**Domain reconnaissance**
-```bash
+Domain Reconnaissance
 python nulltrace.py domain example.com
-```
-
-**Full passive profile**
-```bash
+Full Passive Profile Analysis
 python nulltrace.py profile johndoe@example.com
-```
-
-**Export to CSV**
-```bash
+Export Results to CSV
 python nulltrace.py username johndoe --format csv
-```
-
-## Example Output
-```json
+Example Output
 {
   "query": "johndoe",
   "results": {
@@ -110,35 +126,51 @@ python nulltrace.py username johndoe --format csv
     "reddit": {
       "found": true
     },
+    "domain_info": {
+      "mx_records": [
+        "mail.example.com"
+      ]
+    },
     "email_association": {
       "possible": false
     }
   }
 }
-```
+Why I Built This
 
-## Why I Built This
-NullTrace was created to understand:
-- OSINT methodologies
-- passive data collection techniques
-- identity correlation across platforms
-- modular reconnaissance system design
-- structured intelligence reporting
+I created NullTrace to better understand:
 
-This project simulates the workflow of OSINT tools used in cybersecurity investigations and threat intelligence analysis.
+OSINT methodologies
+passive intelligence gathering
+identity correlation
+modular reconnaissance pipelines
+structured intelligence reporting
 
-## Current Limitations
-- No real-time scraping of restricted platforms
-- Limited API integrations
-- Some sources rely on public endpoints only
-- No image-based OSINT (reverse image search not implemented)
-- No social graph visualization yet
+This project helped me explore workflows commonly used in cybersecurity investigations, threat intelligence, and reconnaissance operations.
 
-## Legal Disclaimer
-This tool is intended for educational and lawful OSINT research only.
-It only collects publicly available information and does not:
-- bypass authentication
-- access private data
-- perform intrusive scanning
+Current Limitations
+No real-time scraping of restricted platforms
+Limited third-party API integrations
+Some sources rely only on public endpoints
+No reverse image OSINT
+No social graph visualization
+Future Improvements
+
+Planned improvements include:
+
+additional OSINT sources
+reverse image intelligence
+social graph visualization
+more breach intelligence integrations
+web dashboard interface
+Legal Disclaimer
+
+This project is intended strictly for educational purposes and lawful OSINT research.
+
+It does not:
+
+bypass authentication
+access private systems
+perform intrusive scanning
 
 Users are responsible for complying with applicable laws and platform terms of service.

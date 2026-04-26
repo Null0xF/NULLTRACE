@@ -5,6 +5,7 @@ from sources.tiktok import TikTokSource
 from sources.dns import DNSSource
 from sources.whois import WhoisSource
 from sources.email_breach import EmailBreachSource
+from sources.phone import PhoneSource
 
 class Resolver:
     def __init__(self):
@@ -16,6 +17,7 @@ class Resolver:
         ]
         self.domain_sources = [DNSSource(), WhoisSource()]
         self.email_sources = [EmailBreachSource()]
+        self.phone_sources = [PhoneSource()]
 
     def get_sources_for_target(self, target_type: str) -> list:
         """Return the list of source modules for a specific target type."""
@@ -25,4 +27,6 @@ class Resolver:
             return self.domain_sources
         elif target_type == "email":
             return self.email_sources
+        elif target_type == "phone":
+            return self.phone_sources
         return []

@@ -17,3 +17,13 @@ def is_valid_username(username: str) -> bool:
         return False
     pattern = r"^[a-zA-Z0-9_-]+$"
     return re.match(pattern, username) is not None
+
+def is_valid_phone(phone: str) -> bool:
+    """Validate phone number format (basic international/local)."""
+    if not phone:
+        return False
+    # Remove common separators
+    sanitized = re.sub(r"[\s\-\(\)]", "", phone)
+    # Basic check: starts with + or digit, followed by 7 to 15 digits
+    pattern = r"^\+?[0-9]{7,15}$"
+    return re.match(pattern, sanitized) is not None

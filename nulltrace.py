@@ -1,4 +1,6 @@
 import sys
+import os
+from dotenv import load_dotenv
 from cli import setup_cli
 from core.engine import OSINTEngine
 from core.deep_correlator import DeepCorrelator
@@ -8,6 +10,9 @@ from output.graph_writer import GraphWriter
 from core.banner import print_banner
 
 def main():
+    # Load environment variables from .env
+    load_dotenv()
+    
     # Force utf-8 encoding for standard output if supported (Windows fix)
     if hasattr(sys.stdout, 'reconfigure'):
         try:
@@ -27,6 +32,8 @@ def main():
         args.command, args.target = "domain", args.short_domain
     elif args.short_profile:
         args.command, args.target = "profile", args.short_profile
+    elif args.short_phone:
+        args.command, args.target = "phone", args.short_phone
 
     if not args.command:
         print("[-] Error: You must specify a target. Use -h for help.")

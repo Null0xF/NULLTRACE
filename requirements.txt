@@ -3,3 +3,4 @@ dnspython==2.6.1
 python-whois==0.8.0
 Pillow==10.2.0
 imagehash==4.3.1
+python-dotenv==1.0.1

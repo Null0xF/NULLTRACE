@@ -1,6 +1,6 @@
 from core.resolver import Resolver
 from core.correlator import Correlator
-from utils.validators import is_valid_email, is_valid_domain, is_valid_username
+from utils.validators import is_valid_email, is_valid_domain, is_valid_username, is_valid_phone
 import sys
 
 class OSINTEngine:
@@ -30,6 +30,8 @@ class OSINTEngine:
                     results[source.name] = source.analyze_domain(target)
                 elif target_type == "email":
                     results[source.name] = source.analyze_email(target)
+                elif target_type == "phone":
+                    results[source.name] = source.analyze_phone(target)
             except Exception as e:
                 print(f"[-] Module {source.name} failed: {str(e)}")
                 results[source.name] = {"error": str(e)}
@@ -91,6 +93,10 @@ class OSINTEngine:
         elif target_type == "username" and not is_valid_username(target):
             print(f"[-] Invalid username format: {target}")
             sys.exit(1)
+        elif target_type == "phone":
+            if not is_valid_phone(target):
+                print(f"[-] Invalid phone number format: {target}")
+                sys.exit(1)
 
     def _print_module_summary(self, module_result: dict):
         """Print relevant findings from a module result to the terminal."""
@@ -134,3 +140,24 @@ class OSINTEngine:
             print(f"    [!] Warning     : Disposable email provider!")
         if module_result.get("is_free_provider"):
             print(f"    [i] Provider    : Free email provider")
+
+        # --- Phone Specific Summaries ---
+        if "tellows" in module_result:
+            t = module_result["tellows"]
+            name_str = f" [{t['name']}]" if t.get("name") and t["name"] != "Unknown" else ""
+            print(f"    [i] Tellows{name_str}: {t['url']}")
+        if "paginebianche" in module_result:
+            print(f"    [i] PagineBianche: {module_result['paginebianche']['url']}")
+        if "accounts" in module_result:
+            print(f"    [*] Search for accounts on:")
+            for platform, url in module_result["accounts"].items():
+                print(f"        - {platform:10}: {url}")
+        if "social_presence" in module_result:
+             presence = module_result["social_presence"]
+             print(f"    [+] Social Presence:")
+             print(f"        - WhatsApp  : {presence['whatsapp_link']}")
+             print(f"        - Telegram  : {presence['telegram_link']}")
+        if "truecaller" in module_result:
+             tc = module_result["truecaller"]
+             status = "[!]" if tc.get("found") else "[-]"
+             print(f"    {status} Truecaller   : {tc['message']}")

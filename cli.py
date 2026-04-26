@@ -27,6 +27,7 @@ Pro flags:
     parser.add_argument("-e", "--email-addr",   dest="short_email",   help="Analyze an email")
     parser.add_argument("-d", "--domain-name",  dest="short_domain",  help="Analyze a domain")
     parser.add_argument("-p", "--profile-addr", dest="short_profile", help="Analyze a full profile (email)")
+    parser.add_argument("-n", "--phone-num",    dest="short_phone",   help="Analyze a phone number")
     parser.add_argument("--correlate", action="store_true", default=False,
                         help="[PRO] Deep correlation: breach + username prediction + profile search + clustering")
     parser.add_argument("--graph",     action="store_true", default=False,
@@ -56,5 +57,10 @@ Pro flags:
     profile_parser = subparsers.add_parser("profile", aliases=['p'], help="Full passive profile (requires email address)")
     profile_parser.add_argument("target", help="Email address to build a profile from")
     profile_parser.add_argument("--format", choices=["json", "csv"], default="json", help="Output format")
+    
+    # Phone command
+    phone_parser = subparsers.add_parser("phone", aliases=['n'], help="Analyze a phone number for identity and accounts")
+    phone_parser.add_argument("target", help="Phone number to analyze (e.g. +39021234567)")
+    phone_parser.add_argument("--format", choices=["json", "csv"], default="json", help="Output format")
     
     return parser.parse_args()
